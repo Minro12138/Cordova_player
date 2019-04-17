@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>音乐播放器</title>
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" href="css/index.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.mobile-1.4.5.min.js"></script>
+    <script src="js/index.js"></script>
+    <script src="cordova.js"></script>
+</head>
+
+<body>
+    <div data-role="page" id="page">
+        <!--头部-->
+        <div data-role="header" id="header" data-position="fixed">
+            <h1>音乐播放器</h1>
+        </div>
+
+        <!--页面-->
+        <div data-role="main" id="main">
+            <div id="imgdiv">
+                <img src="img/1.jpg" width="100%">
+            </div>
+            <ul data-role="listview" id="ullist">
+                <!--<li data-icon="false">-->
+                <!--<a style="background-color: white;" id="m1">-->
+                <!--<div class="bianhao">1</div>-->
+                <!--<div class="msg">-->
+                <!--<h1>G.E.M.邓紫棋 - 泡沫.mp3</h1>-->
+                <!--<p>2019-4-12</p>-->
+                <!--</div>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--<li data-icon="false">-->
+                <!--<a style="background-color: white;" id="m2">-->
+                <!--<div class="bianhao">2</div>-->
+                <!--<div class="msg">-->
+                <!--<h1>G.E.M.邓紫棋 - 龙卷风.mp3</h1>-->
+                <!--<p>2019-4-12</p>-->
+                <!--</div>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--<li data-icon="false">-->
+                <!--<a style="background-color: white;" id="m3">-->
+                <!--<div class="bianhao">3</div>-->
+                <!--<div class="msg">-->
+                <!--<h1>周笔畅 - 岁月神偷.mp3</h1>-->
+                <!--<p>2019-4-12</p>-->
+                <!--</div>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--<li data-icon="false">-->
+                <!--<a style="background-color: white;" id="m4">-->
+                <!--<div class="bianhao">4</div>-->
+                <!--<div class="msg">-->
+                <!--<h1>火箭少女101 - 卡路里.mp3</h1>-->
+                <!--<p>2019-4-12</p>-->
+                <!--</div>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--<li data-icon="false">-->
+                <!--<a style="background-color: white;" id="m5">-->
+                <!--<div class="bianhao">5</div>-->
+                <!--<div class="msg">-->
+                <!--<h1>韩红、林俊杰 - 飞云之下.mp3</h1>-->
+                <!--<p>2019-4-12</p>-->
+                <!--</div>-->
+                <!--</a>-->
+                <!--</li>-->
+            </ul>
+        </div>
+
+        <!--页脚-->
+        <div data-role="footer" id="footer" data-position="fixed">
+            <div>
+                <img src="img/泡沫.jpg" width="60px" height="60px" id="fimg">
+                <div id="play" data-position="fixed">
+                    <div id="jingdu"></div>
+                    <div id="time">当前播放位置：</div>
+                    <div id="bn">
+                        <div id="btn1"></div>
+                        <div id="btn2"></div>
+                        <div id="btn3"></div>
+                        <div id="btn4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var md = '<li data-icon="false" id="@liid">\n' +
+            '                    <a style="background-color: white;">\n' +
+            '                        <div class="bianhao">@musicid</div>\n' +
+            '                        <div class="msg">\n' +
+            '                            <h1>@songname</h1>\n' +
+            '                            <p>2019-4-12</p>\n' +
+            '                        </div>\n' +
+            '                    </a>\n' +
+            '                </li>';
+        var songs = ['G.E.M.邓紫棋 - 泡沫.mp3', 'G.E.M.邓紫棋 - 龙卷风.mp3', '周笔畅 - 岁月神偷.mp3', '火箭少女101 - 卡路里.mp3',
+            '韩红、林俊杰 - 飞云之下.mp3'
+        ];
+        for (var i = 0; i < songs.length; i++) {
+            var tmp = md;
+            tmp = tmp.replace("@liid", "m" + i);
+            tmp = tmp.replace("@musicid", i + 1);
+            tmp = tmp.replace("@songname", songs[i]);
+
+            $('#ullist').append(tmp);
+        }
+
+        // $("#ullist").on("click", "li", function () {
+        //     $("li a").css("background", "white"); //所有的LI恢复背景
+        //     $(this.firstElementChild).css("background", "yellow"); //为当前单击的LI设置背景
+        //     var id = $(this).prop("id"); //获取被单击的LI的id
+        //     console.log(id);
+        //     id = id.replace("m", "");
+        //     console.log("点击的按钮为：" + id);
+
+        //     //LI的id格式为：li0 li1 li2 li3 ... ,去掉前缀则为数字了，代表播放的歌曲下标
+        //     //其他实现
+        // });
+
+        // $("#bn").on("click", "div", function () {
+        //     $("#bn").children().css("background-color", "white");
+        //     $(this).css("background-color", "red");
+        //     var id = $(this).prop("id");
+        //     console.log("当前按钮的ID为：" + id);
+        //     if (id == "btn2") {
+        //         changePlayorPause();
+        //     }
+        // });
+        // var btn2Play = false;
+
+        // function changePlayorPause() {
+        //     console.log("点击播放/暂停");
+        //     if (btn2Play) {
+        //         btn2Play = false;
+        //         $("#btn2").css({
+        //             // "background-image": "url('" + cordova.file.applicationDirectory + "www/img/暂停.png')",
+        //             // "background-color": "red"
+        //         });
+        //         // media.pause();
+        //         console.log("暂停");
+        //     } else {
+        //         btn2Play = true;
+        //         $("#btn2").css({
+        //             // "background-image": "url('" + cordova.file.applicationDirectory + "www/img/播放.png')",
+        //             // "background-color": "red"
+        //         });
+        //         // media.play();
+        //         console.log("播放");
+        //     }
+        //     // console.log("已暂停！");
+        // }
+    </script>
+
+</body>
+
+</html>

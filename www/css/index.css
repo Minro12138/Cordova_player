@@ -1,0 +1,94 @@
+.bianhao {
+    width: 50px;
+    height: 50px;
+    background-color: rgb(148, 116, 107);
+    /* border:2px solid rgba(0, 0, 0, 0); */
+    border-radius: 100%;
+    text-align: center;
+    line-height: 50px;
+    color: white;
+}
+
+.msg {
+    float: left;
+    margin-top: -56px;
+    margin-left: 80px;
+}
+
+#footer {
+    background-color: white;
+    height: 80px;
+}
+
+#fimg {
+    margin-top: 10px;
+    margin-left: 5px;
+    border: 2px solid rgba(0, 0, 0, 0);
+    border-radius: 100%;
+}
+
+#play {
+    width: 75%;
+    float: right;
+}
+
+#jingdu {
+    background-color: darkgray;
+    height: 3px;
+    width: 95%;
+    margin-top: 15px;
+}
+
+#time {
+    margin-top: 3px;
+    font-size: 5px;
+}
+
+#bn{
+    margin-left: 20%;margin-top: 5px;
+}
+
+#btn1{
+    float: left;
+    width: 30px;height: 30px;
+    border: 2px solid rgba(0, 0, 0, 1);
+    border-radius: 100%;
+    background-color: white;
+    background-image: url('../img/上一首.png');
+    background-repeat:no-repeat;
+    background-size:30px 30px;
+    margin-left: 5px;
+}
+#btn2{
+    float: left;
+    width: 30px;height: 30px;
+    border: 2px solid rgba(0, 0, 0, 1);
+    border-radius: 100%;
+    background-color: white;
+    background-image: url('../img/播放.png');
+    background-repeat:no-repeat;
+    background-size:30px 30px;
+    margin-left: 5px;
+}
+#btn3{
+    float: left;
+    width: 30px;height: 30px;
+    border: 2px solid rgba(0, 0, 0, 1);
+    border-radius: 100%;
+    background-color: white;
+    background-image: url('../img/下一首.png');
+    background-repeat:no-repeat;
+    background-size:30px 30px;
+    margin-left: 5px;
+}
+#btn4{
+    float: left;
+    width: 30px;height: 30px;
+    border: 2px solid rgba(0, 0, 0, 1);
+    border-radius: 100%;
+    background-color: white;
+    background-image: url('../img/停止.png');
+    background-repeat:no-repeat;
+    background-size:30px 30px;
+    margin-left: 5px;
+}
