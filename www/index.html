@@ -81,7 +81,7 @@
                 <img src="img/泡沫.jpg" width="60px" height="60px" id="fimg">
                 <div id="play" data-position="fixed">
                     <div id="jingdu"></div>
-                    <div id="time">当前播放位置：</div>
+                    <div id="time">就绪</div>
                     <div id="bn">
                         <div id="btn1"></div>
                         <div id="btn2"></div>
@@ -106,6 +106,7 @@
         var songs = ['G.E.M.邓紫棋 - 泡沫.mp3', 'G.E.M.邓紫棋 - 龙卷风.mp3', '周笔畅 - 岁月神偷.mp3', '火箭少女101 - 卡路里.mp3',
             '韩红、林俊杰 - 飞云之下.mp3'
         ];
+        var songsImg = ['泡沫.jpg','龙卷风.jpg','岁月神偷.jpg','卡路里.jpg','飞云之下.jpg'];
         for (var i = 0; i < songs.length; i++) {
             var tmp = md;
             tmp = tmp.replace("@liid", "m" + i);

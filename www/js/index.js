@@ -5,6 +5,7 @@ var media = null; //播放对象
 var btn2Play = false; //按钮播放状态
 var tid1, tid2; //进度定时器ID
 var id; //当前播放的歌曲id
+var rid;
 
 function onDeviceReady() {
     console.log("启动");
@@ -36,11 +37,11 @@ function onDeviceReady() {
             changePlayorPause();
         } else if (bid == "btn1") {
             console.log('点击上一首');
-            id = id -1;
+            id = (id - 1)<0?songs.length-1:(id-1);
             changeSong(id);
         } else if (bid == "btn3") {
             console.log('点击下一首');
-            id = id+1;
+            id = (id + 1)%songs.length;
             changeSong(id);
         } else {
             console.log('点击停止按钮');
@@ -74,6 +75,8 @@ function playAudio(src) {
 
 function replayAudio(src) {
     console.log("开始播放！");
+    $("#headimg").attr("src", "img/" + songsImg[id]);
+    $("#fimg").attr("src", "img/" + songsImg[id]);
     src = cordova.file.applicationDirectory + "www/mp3/" + src;
     media = new Media(src,
         function () {
@@ -94,27 +97,34 @@ function replayAudio(src) {
                         // "background-image": "url('" + "www/img/暂停.png')",
                         "background-color": "red"
                     });
+
                     break;
 
                     //-----进行播放时-----
                 case Media.MEDIA_RUNNING:
-                    //-----旋转图片-----
+                    // //-----旋转图片-----
+                    // $("#fimg").css("transform","rotate(0deg)");
                     // var angle = 0;
-                    // for (var i = 0; i < 360; i++) {
+                    // var rid = setInterval(function(){
                     //     $("#fimg").css("transform", "rotate(" + angle + "deg)");
-                    //     angle += 5;
-                    // }
+                    //     angle += 2;
+                    // },100);
+                    // // for (var i = 0; i < 360; i++) {
+                    // //     $("#fimg").css("transform", "rotate(" + angle + "deg)");
+                    // //     angle += 5;
+                    // // }
+                    console.log('状态：运行中！');
                     playPos();
                     break;
 
                     //-----暂停时-----
                 case Media.MEDIA_PAUSED:
                     console.log("状态：暂停播放！");
-                    // $("#btn2").css({
-                    //     "background-image": "url('" + cordova.file.applicationDirectory + "www/img/播放.png')",
-                    //     // "background-image": "url('" + "www/img/播放.png')",
-                    //     "background-color": "red"
-                    // });
+                    $("#btn2").css({
+                        "background-image": "url('" + cordova.file.applicationDirectory + "www/img/播放.png')",
+                        // "background-image": "url('" + "www/img/播放.png')",
+                        "background-color": "red"
+                    });
                     btn2Play = false;
                     break;
 
@@ -123,6 +133,7 @@ function replayAudio(src) {
                     if (isReplay == false) {
                         afterStop();
                     }
+                    clearInterval(rid);
                     break;
             }
         });
@@ -138,6 +149,12 @@ function stopAudio() {
         media.stop();
         $("#time").html("完成");
     }
+    btn2Play = false;
+    $("#btn2").css({
+        "background-image": "url('" + cordova.file.applicationDirectory + "www/img/播放.png')"
+        // "background-color": "red"
+    });
+    clearInterval(rid);
 }
 
 function afterStop() {
@@ -148,12 +165,20 @@ function afterStop() {
     media = null; //注意！为了下次可以播放，要初始化
     btn2Play = true;
     $('#ullist li a').css("background", "white"); //所有的LI恢复背景
-    $("#a"+id).css("background", "yellow");
+    $("#a" + id).css("background", "yellow");
+    // clearInterval(rid);
 }
 
 function afterPlay() {
     isReplay = false;
     //执行其他界面操作
+    //-----旋转图片-----
+    $("#fimg").css("transform","rotate(0deg)");
+    var angle = 0;
+    rid = setInterval(function(){
+        $("#fimg").css("transform", "rotate(" + angle + "deg)");
+        angle += 2;
+    },100);
 }
 
 
@@ -194,6 +219,18 @@ function playPos() {
             $("#time").html("当前播放位置：" + parseInt(pos / 60) + ":" + (Array(2).join('0') + Math.round(pos) % 60).slice(-2) + "/" + len); //显示播放的进度文字
         }, function () {});
     }, 200);
+
+    // //-----旋转图片-----
+    // $("#fimg").css("transform", "rotate(0deg)");
+    // var angle = 0;
+    // rid = setInterval(function () {
+    //     $("#fimg").css("transform", "rotate(" + angle + "deg)");
+    //     angle += 2;
+    // }, 100);
+    // // for (var i = 0; i < 360; i++) {
+    // //     $("#fimg").css("transform", "rotate(" + angle + "deg)");
+    // //     angle += 5;
+    // // }
 }
 
 //初始化
@@ -206,8 +243,8 @@ function changeSong(songid) {
         id = 0;
         console.log(songs[songid]);
         playAudio(songs[songid]);
-    } else if (songid > songs.length-1) {
-        songid = songs.length-1;
+    } else if (songid > songs.length - 1) {
+        songid = songs.length - 1;
         id = songid;
         console.log(songs[songid]);
         playAudio(songs[songid]);
